@@ -3,12 +3,12 @@ import { Moon, Sun, Book, GitGraph } from 'lucide-react';
 import { books } from './data/books';
 import { BookList } from './components/BookList';
 import { BookDetailsModal } from './components/BookDetailsModal';
-import { InteractivePlot } from './components/InteractivePlot';
+import { StatsView } from './components/StatsView';
 import './index.css';
 
 function App() {
   const [theme, setTheme] = useState('light');
-  const [view, setView] = useState('list'); // 'list' | 'plot'
+  const [view, setView] = useState('list'); // 'list' | 'stats'
   const [selectedBook, setSelectedBook] = useState(null);
 
   useEffect(() => {
@@ -36,10 +36,10 @@ function App() {
               List
             </button>
             <button 
-              className={view === 'plot' ? 'active' : ''} 
-              onClick={() => setView('plot')}
+              className={view === 'stats' ? 'active' : ''} 
+              onClick={() => setView('stats')}
             >
-              Plot
+              Stats
             </button>
           </div>
           <button className="icon-btn" onClick={toggleTheme} aria-label="Toggle Theme">
@@ -52,7 +52,7 @@ function App() {
         {view === 'list' ? (
           <BookList books={books} onBookSelect={setSelectedBook} />
         ) : (
-          <InteractivePlot books={books} onBookSelect={setSelectedBook} />
+          <StatsView books={books} />
         )}
       </main>
 
