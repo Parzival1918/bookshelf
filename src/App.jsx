@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Book, GitGraph } from 'lucide-react';
-import { books } from './data/books';
+import { books, readingList } from './data/books';
 import { BookList } from './components/BookList';
 import { BookDetailsModal } from './components/BookDetailsModal';
 import { StatsView } from './components/StatsView';
@@ -8,7 +8,7 @@ import './index.css';
 
 function App() {
   const [theme, setTheme] = useState('light');
-  const [view, setView] = useState('list'); // 'list' | 'stats'
+  const [view, setView] = useState('list'); // 'list' | 'stats' | 'reading-list'
   const [selectedBook, setSelectedBook] = useState(null);
 
   useEffect(() => {
@@ -33,7 +33,13 @@ function App() {
               className={view === 'list' ? 'active' : ''} 
               onClick={() => setView('list')}
             >
-              List
+              Library
+            </button>
+            <button 
+              className={view === 'reading-list' ? 'active' : ''} 
+              onClick={() => setView('reading-list')}
+            >
+              Reading List
             </button>
             <button 
               className={view === 'stats' ? 'active' : ''} 
@@ -50,9 +56,11 @@ function App() {
 
       <main>
         {view === 'list' ? (
-          <BookList books={books} onBookSelect={setSelectedBook} />
+          <BookList key="library" books={books} onBookSelect={setSelectedBook} />
+        ) : view === 'reading-list' ? (
+          <BookList key="reading-list" books={readingList} onBookSelect={setSelectedBook} isReadingList={true} />
         ) : (
-          <StatsView books={books} />
+          <StatsView books={books} readingList={readingList} />
         )}
       </main>
 

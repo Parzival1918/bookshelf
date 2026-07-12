@@ -2,9 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { BookCard } from './BookCard';
 import { Search } from 'lucide-react';
 
-export function BookList({ books, onBookSelect }) {
+export function BookList({ books, onBookSelect, isReadingList = false }) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('readingYear');
+  const [sortBy, setSortBy] = useState(isReadingList ? 'publicationYear' : 'readingYear');
 
   const groupedBooks = useMemo(() => {
     let result = [...books];
@@ -88,7 +88,7 @@ export function BookList({ books, onBookSelect }) {
             onChange={e => setSortBy(e.target.value)}
             className="sort-select"
           >
-            <option value="readingYear">Reading Order (Newest)</option>
+            {!isReadingList && <option value="readingYear">Reading Order (Newest)</option>}
             <option value="publicationYear">Publication Year</option>
             <option value="series">Saga / Series</option>
           </select>

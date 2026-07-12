@@ -501,6 +501,11 @@ h1 {
   background: rgba(251, 133, 0, 0.1);
 }
 
+.stat-card.tertiary .stat-icon {
+  color: #4361ee;
+  background: rgba(67, 97, 238, 0.1);
+}
+
 .stat-content h3 {
   font-size: 1rem;
   color: var(--text-secondary);

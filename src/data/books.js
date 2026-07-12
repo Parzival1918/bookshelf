@@ -120,3 +120,17 @@ export const books = [
     coverColor: "#073b4c"
   }
 ];
+
+export const readingList = [
+  {
+    id: "hyperion",
+    title: "Hyperion",
+    author: "Dan Simmons",
+    publicationYear: 1989,
+    description: "On the eve of Armageddon, with the entire galaxy at war, seven pilgrims set forth on a final voyage to Hyperion seeking the answers to the unsolved riddles of their lives.",
+    genre: "Science Fiction",
+    series: "Hyperion Cantos",
+    rating: 0,
+    coverColor: "#293241"
+  }
+];

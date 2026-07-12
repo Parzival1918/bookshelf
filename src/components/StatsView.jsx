@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Star, TrendingUp, Hash, Library, Award } from 'lucide-react';
+import { Star, TrendingUp, Hash, Library, Award, Bookmark } from 'lucide-react';
 
 const COLORS = [
   '#e63946', '#f4a261', '#2a9d8f', '#e76f51', '#264653',
@@ -76,7 +76,7 @@ const PieChart = ({ data }) => {
   );
 };
 
-export const StatsView = ({ books }) => {
+export const StatsView = ({ books, readingList = [] }) => {
   const stats = useMemo(() => {
     const totalBooks = books.length;
     const avgRating = totalBooks > 0 
@@ -125,6 +125,13 @@ export const StatsView = ({ books }) => {
           <div className="stat-content">
             <h3>Avg Rating</h3>
             <p className="stat-value">{stats.avgRating}</p>
+          </div>
+        </div>
+        <div className="stat-card tertiary">
+          <div className="stat-icon"><Bookmark size={24} /></div>
+          <div className="stat-content">
+            <h3>To Read</h3>
+            <p className="stat-value">{readingList.length}</p>
           </div>
         </div>
       </div>
