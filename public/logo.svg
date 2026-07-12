@@ -1,0 +1,13 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Book Cover -->
+  <rect x="40" y="30" width="160" height="196" rx="8" fill="#e11d48"/>
+  <rect x="40" y="30" width="16" height="196" fill="#be123c"/>
+  <!-- Pages -->
+  <rect x="56" y="46" width="134" height="164" rx="4" fill="#f8fafc"/>
+  <!-- Text Lines -->
+  <rect x="80" y="70" width="80" height="8" rx="4" fill="#cbd5e1"/>
+  <rect x="80" y="94" width="90" height="8" rx="4" fill="#cbd5e1"/>
+  <rect x="80" y="118" width="70" height="8" rx="4" fill="#cbd5e1"/>
+  <rect x="80" y="142" width="85" height="8" rx="4" fill="#cbd5e1"/>
+  <rect x="80" y="166" width="60" height="8" rx="4" fill="#cbd5e1"/>
+</svg>
