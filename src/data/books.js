@@ -118,6 +118,30 @@ export const books = [
     series: null,
     rating: 3.5,
     coverColor: "#073b4c"
+  },
+  {
+    id: "the-long-earth",
+    title: "The Long Earth",
+    author: "Terry Pratchett and Stephen Baxter",
+    publicationYear: 2012,
+    readingYear: 2026,
+    description: "In the near future, a scientific breakthrough allows humanity to travel between parallel universes known as 'the Long Earth'. There is a monk reincarnated as a robot called Lobsang.",
+    genre: "Science Fiction",
+    series: "The Long Earth",
+    rating: 4.5,
+    coverColor: "#1e2a3f"
+  },
+  {
+    id: "seven-eves",
+    title: "Seven Eves",
+    author: "Neal Stephenson",
+    publicationYear: 2015,
+    readingYear: 2026,
+    description: "In the near future, a mysterious force known shatters the Moon and causes a White Sky, triggering a catastrophic extinction event on Earth. Humanity's only hope lies with the people sent to a space station to survive.",
+    genre: "Science Fiction",
+    series: null,
+    rating: 4.5,
+    coverColor: "#2c3e50"
   }
 ];
 
