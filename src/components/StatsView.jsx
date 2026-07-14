@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Star, TrendingUp, Hash, Library, Award, Bookmark } from 'lucide-react';
+import { Star, TrendingUp, Hash, Library, Award, Bookmark, Calendar } from 'lucide-react';
 
 const COLORS = [
   '#e63946', '#f4a261', '#2a9d8f', '#e76f51', '#264653',
@@ -76,6 +76,62 @@ const PieChart = ({ data }) => {
   );
 };
 
+const PubYearBarChart = ({ sortedPubYears, maxBooksInPubYear }) => {
+  const [hoveredYear, setHoveredYear] = useState(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e) => {
+    setMousePos({ x: e.clientX, y: e.clientY });
+  };
+
+  return (
+    <div className="v-bar-container" onMouseMove={handleMouseMove} style={{ position: 'relative' }}>
+      <div className="v-bar-chart">
+        {sortedPubYears.map(([yearLabel, data]) => (
+          <div 
+            key={yearLabel} 
+            className="v-bar-col"
+            onMouseEnter={() => setHoveredYear(yearLabel)}
+            onMouseLeave={() => setHoveredYear(null)}
+          >
+            <div 
+              className="v-bar-fill" 
+              style={{ height: `${(data.count / maxBooksInPubYear) * 100}%` }}
+            >
+              {data.count > 0 && <span className="v-bar-value">{data.count}</span>}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="v-bar-labels">
+        {sortedPubYears.map(([yearLabel]) => (
+          <div key={yearLabel} className="v-bar-label">{yearLabel}</div>
+        ))}
+      </div>
+      
+      {hoveredYear !== null && (
+        <div 
+          className="pie-tooltip"
+          style={{ 
+            left: mousePos.x + 20 + 'px', 
+            top: mousePos.y + 20 + 'px',
+            transform: 'none',
+            animation: 'none',
+            zIndex: 1000
+          }}
+        >
+          <strong>{hoveredYear}</strong>
+          <div style={{ marginTop: '4px', fontSize: '0.85em', opacity: 0.9 }}>
+            {sortedPubYears.find(([y]) => y === hoveredYear)[1].books.map((title, i) => (
+              <div key={i}>• {title}</div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const StatsView = ({ books, readingList = [] }) => {
   const stats = useMemo(() => {
     const totalBooks = books.length;
@@ -90,6 +146,27 @@ export const StatsView = ({ books, readingList = [] }) => {
 
     const sortedYears = Object.entries(booksPerYear).sort(([a], [b]) => a.localeCompare(b));
     const maxBooksInYear = Math.max(...Object.values(booksPerYear), 1);
+
+    const pubYearData = books.reduce((acc, book) => {
+      let yearLabel = 'Unknown';
+      if (book.publicationYear) {
+        const year = book.publicationYear;
+        const startDecade = Math.floor(year / 10) * 10;
+        yearLabel = `${startDecade}-${startDecade + 9}`;
+      }
+      
+      if (!acc[yearLabel]) acc[yearLabel] = { count: 0, books: [] };
+      acc[yearLabel].count += 1;
+      acc[yearLabel].books.push(book.title);
+      return acc;
+    }, {});
+
+    const sortedPubYears = Object.entries(pubYearData).sort(([a], [b]) => {
+      if (a === 'Unknown') return 1;
+      if (b === 'Unknown') return -1;
+      return parseInt(a) - parseInt(b);
+    });
+    const maxBooksInPubYear = Math.max(...Object.values(pubYearData).map(d => d.count), 1);
 
     const genres = books.reduce((acc, book) => {
       acc[book.genre] = (acc[book.genre] || 0) + 1;
@@ -107,7 +184,7 @@ export const StatsView = ({ books, readingList = [] }) => {
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5);
 
-    return { totalBooks, avgRating, sortedYears, maxBooksInYear, topGenres, topAuthors };
+    return { totalBooks, avgRating, sortedYears, maxBooksInYear, sortedPubYears, maxBooksInPubYear, topGenres, topAuthors };
   }, [books]);
 
   return (
@@ -159,6 +236,8 @@ export const StatsView = ({ books, readingList = [] }) => {
           </div>
         </div>
 
+
+
         <div className="stat-panel">
           <div className="panel-header">
             <Hash size={20} className="panel-icon" />
@@ -195,6 +274,17 @@ export const StatsView = ({ books, readingList = [] }) => {
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className="stat-panel full-width">
+          <div className="panel-header">
+            <Calendar size={20} className="panel-icon" />
+            <h2>Publication Years</h2>
+          </div>
+          <PubYearBarChart 
+            sortedPubYears={stats.sortedPubYears} 
+            maxBooksInPubYear={stats.maxBooksInPubYear} 
+          />
         </div>
       </div>
     </div>

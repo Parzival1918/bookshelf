@@ -534,6 +534,10 @@ h1 {
   border: 1px solid var(--border);
 }
 
+.stat-panel.full-width {
+  grid-column: 1 / -1;
+}
+
 .panel-header {
   display: flex;
   align-items: center;
@@ -698,4 +702,69 @@ h1 {
     flex: 1;
     text-align: center;
   }
+}
+
+/* Vertical Bar Chart */
+.v-bar-container {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  margin-top: 1rem;
+}
+
+.v-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  flex: 1;
+  padding-top: 1rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.v-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  flex: 1;
+}
+
+.v-bar-fill {
+  background: linear-gradient(0deg, var(--accent), #f4a261);
+  width: 90%;
+  max-width: 80px;
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0.5rem;
+  min-height: 24px;
+  transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.v-bar-fill:hover {
+  filter: brightness(1.1);
+}
+
+.v-bar-value {
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.v-bar-labels {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 0.75rem;
+}
+
+.v-bar-label {
+  flex: 1;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  text-align: center;
+  white-space: nowrap;
 }
